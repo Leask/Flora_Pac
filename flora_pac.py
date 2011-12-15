@@ -22,7 +22,6 @@ def generate_pac(proxy):
         "\n"
         "\nfunction FindProxyForURL(url, host)"
         "\n{"
-        "\n"
         "\n    var list = ["
     )
     intLines = 0
@@ -34,6 +33,13 @@ def generate_pac(proxy):
     strLines = strLines + (
         "\n    ];"
         "\n"
+        "\n    if (isPlainHostName(host) ||"
+        "\n      (host == '127.0.0.1') ||"
+        "\n      (host == 'localhost') ||"
+        "\n      (/\\b([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\\b/.test(host))) {"
+        "\n        return 'DIRECT';"
+        "\n    }"
+        "\n"
         "\n    var ip = dnsResolve(host);"
         "\n"
         "\n    for (var i in list) {"
@@ -43,7 +49,6 @@ def generate_pac(proxy):
         "\n    }"
         "\n"
         "\n    return '%s';"
-        "\n"
         "\n}"
         "\n"%(proxy)
     )
