@@ -20,8 +20,8 @@ def generate_pac(proxy):
         "// Flora_Pac by @leaskh"
         "\n// www.leaskh.com, i@leaskh.com"
         "\n"
-        "\nfunction FindProxyForURL(url, host)"
-        "\n{"
+        "\nfunction FindProxyForURL(url, host) {"
+        "\n"
         "\n    var list = ["
         "\n        ['192.168.0.0', '255.255.0.0'],"
     )
@@ -34,10 +34,10 @@ def generate_pac(proxy):
     strLines = strLines + (
         "\n    ];"
         "\n"
-        "\n    if (isPlainHostName(host) ||"
-        "\n      (host == '127.0.0.1') ||"
-        "\n      (host == 'localhost') ||"
-        "\n      (/\\b([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\\b/.test(host))) {"
+        "\n    if (isPlainHostName(host)"
+        "\n     || (host == '127.0.0.1')"
+        "\n     || (host == 'localhost')"
+        "\n     || (/\\b([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\\b/.test(host))) {"
         "\n        return 'DIRECT';"
         "\n    }"
         "\n"
@@ -50,6 +50,7 @@ def generate_pac(proxy):
         "\n    }"
         "\n"
         "\n    return '%s';"
+        "\n"
         "\n}"
         "\n"%(proxy)
     )
