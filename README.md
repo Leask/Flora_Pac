@@ -1,0 +1,1 @@
+Generate proxy auto-config rules. (Working with GFW)
