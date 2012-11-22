@@ -24,13 +24,14 @@ def generate_pac(proxy):
         "\n{"
         "\n"
         "\n    var list = ["
+        "\n        ['192.168.0.0', '255.255.0.0'],"
     )
     intLines = 0
     for ip,mask,_ in results:
         if intLines > 0:
             strLines = strLines + ','
         intLines = intLines + 1
-        strLines = strLines + "\n        ['%s', '%s']"%(ip, mask)    
+        strLines = strLines + "\n        ['%s', '%s']"%(ip, mask)
     strLines = strLines + (
         "\n    ];"
         "\n"
