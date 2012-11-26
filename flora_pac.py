@@ -1,10 +1,7 @@
 #!/usr/bin/env python
-#
 # Flora_Pac by @leaskh
 # www.leaskh.com, i@leaskh.com
-#
-# based on chnroutes project (by Numb.Majority@gmail.com)
-#
+# Based on chnroutes project (by Numb.Majority@gmail.com)
 
 import re
 import urllib2
