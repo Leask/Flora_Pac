@@ -11,7 +11,7 @@ import ipaddress
 
 
 def generate_pac(proxy):
-    results  = merge_all(fetch_ip_data())
+    results  = fetch_ip_data()
     pacfile  = 'flora_pac.pac'
     rfile    = open(pacfile, 'w')
     strLines = (
@@ -59,33 +59,11 @@ def generate_pac(proxy):
            "Usage: Use the newly created %s as your web browser's automatic "
            "proxy configuration (.pac) file."%(intLines, pacfile))
 
-def merge_networks(net1, net2):
-    super_net1 = net1.supernet()
-    super_net2 = net2.supernet()
-
-    if super_net1 == super_net2 \
-            and super_net1.network_address == net1.network_address \
-            and super_net1.broadcast_address == net2.broadcast_address:
-        return super_net1
-
-    return None
-
-def merge_all(networks):
-    i = 1
+def merge_networks(networks):
+    i = 0
     while i < len(networks):
-        if i == 0:
-            i += 1
-            continue
-        merged_net = merge_networks(networks[i-1], networks[i])
-        if merged_net is None:
-            i += 1
-            continue
-        networks[i-1] = merged_net
-        networks.pop(i)
-        if i > 1:
-            i -= 1
-
-    return networks
+        net = ipaddress.ip_network(u"%s/%s" % (networks[i].nework_address,
+                                               networks[i].netmask))
 
 def fetch_ip_data():
     #fetch data from apnic
