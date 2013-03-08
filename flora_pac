@@ -7,7 +7,6 @@ import re
 import urllib2
 import argparse
 import math
-import ipaddress
 
 
 def generate_pac(proxy):
@@ -24,12 +23,11 @@ def generate_pac(proxy):
         "\n        ['192.168.0.0', '255.255.0.0'],"
     )
     intLines = 0
-    for net in results:
+    for ip,mask,_ in results:
         if intLines > 0:
             strLines = strLines + ','
         intLines = intLines + 1
-        strLines = strLines + "\n        ['%s', '%s']"%(net.network_address,
-                                                        net.netmask)
+        strLines = strLines + "\n        ['%s', '%s']"%(ip, mask)
     strLines = strLines + (
         "\n    ];"
         "\n"
@@ -59,11 +57,6 @@ def generate_pac(proxy):
            "Usage: Use the newly created %s as your web browser's automatic "
            "proxy configuration (.pac) file."%(intLines, pacfile))
 
-def merge_networks(networks):
-    i = 0
-    while i < len(networks):
-        net = ipaddress.ip_network(u"%s/%s" % (networks[i].nework_address,
-                                               networks[i].netmask))
 
 def fetch_ip_data():
     #fetch data from apnic
@@ -97,9 +90,7 @@ def fetch_ip_data():
         #mask in *nix format
         mask2=32-int(math.log(num_ip,2))
 
-        net = ipaddress.ip_network(u"%s/%s" % (starting_ip, mask))
-
-        results.append(net)
+        results.append((starting_ip,mask,mask2))
 
     return results
 
