@@ -20,6 +20,7 @@ def generate_pac(proxy):
         "\nfunction FindProxyForURL(url, host) {"
         "\n"
         "\n    var list = ["
+        "\n        ['127.0.0.1', '255.0.0.0'],"
         "\n        ['192.168.0.0', '255.255.0.0'],"
     )
     intLines = 0
