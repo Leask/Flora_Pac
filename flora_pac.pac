@@ -1732,7 +1732,7 @@ function FindProxyForURL(url, host) {
     if (isPlainHostName(host)
      || (host === '127.0.0.1')
      || (host === 'localhost')
-     || (/([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/.test(host))) {
+     || (/\b([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\b/.test(host))) {
         return 'DIRECT';
     }
 
