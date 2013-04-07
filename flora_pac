@@ -71,6 +71,7 @@ def fetch_ip_data():
     cndata=cnregex.findall(data)
 
     results=[]
+    prev_net=''
 
     for item in cndata:
         unit_items=item.split('|')
@@ -83,8 +84,8 @@ def fetch_ip_data():
         mask=[0]*4
         mask[0]=imask[0:2]
         mask[1]=imask[2:4]
-        mask[2]=imask[4:6]
-        mask[3]=imask[6:8]
+        mask[2]='0' #imask[4:6]
+        mask[3]='0' #imask[6:8]
 
         #convert str to int
         mask=[ int(i,16 ) for i in mask]
@@ -93,7 +94,13 @@ def fetch_ip_data():
         #mask in *nix format
         mask2=32-int(math.log(num_ip,2))
 
-        results.append((starting_ip,mask,mask2))
+        ip=starting_ip.split('.')
+        ip[2] = '0'
+        ip[3] = '0'
+        starting_ip = '.'.join(ip)
+        if starting_ip != prev_net:
+            results.append((starting_ip,mask,mask2))
+            prev_net = starting_ip
 
     return results
 
