@@ -1748,6 +1748,6 @@ function FindProxyForURL(url, host) {
         }
     }
 
-    return 'SOCKS 127.0.0.1:8964; SOCKS5 127.0.0.1:8964; DIRECT';
+    return 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT';
 
 }
