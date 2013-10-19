@@ -4,10 +4,6 @@
 function FindProxyForURL(url, host) {
 
     var list = [
-        [2130706433, 4278190080],
-        [167772160, 4278190080],
-        [2886729728, 4293918720],
-        [3232235520, 4294901760],
         [16777216, 4294901760],
         [16842752, 4294901760],
         [16908288, 4294901760],
@@ -34,6 +30,7 @@ function FindProxyForURL(url, host) {
         [29360128, 4294443008],
         [30015488, 4294836224],
         [30146560, 4294705152],
+        [167772160, 4278190080],
         [234881024, 4294901760],
         [234946560, 4294901760],
         [235929600, 4293918720],
@@ -396,12 +393,18 @@ function FindProxyForURL(url, host) {
         [1729953792, 4294901760],
         [1730019328, 4294901760],
         [1730084864, 4294901760],
+        [1743781888, 4294901760],
+        [1743847424, 4294901760],
+        [1743912960, 4294901760],
+        [1743978496, 4294901760],
         [1744044032, 4294901760],
         [1744109568, 4294901760],
         [1744175104, 4294901760],
         [1744240640, 4294901760],
         [1744306176, 4294901760],
         [1744371712, 4294901760],
+        [1744437248, 4294901760],
+        [1744502784, 4294901760],
         [1778384896, 4294901760],
         [1778515968, 4294836224],
         [1778647040, 4294705152],
@@ -1018,6 +1021,7 @@ function FindProxyForURL(url, host) {
         [2111569920, 4294836224],
         [2111700992, 4294836224],
         [2113798144, 4294901760],
+        [2130706433, 4278190080],
         [2260992000, 4294901760],
         [2332622848, 4294901760],
         [2340487168, 4294901760],
@@ -1099,6 +1103,7 @@ function FindProxyForURL(url, host) {
         [2876506112, 4294705152],
         [2876768256, 4294443008],
         [2882535424, 4293918720],
+        [2886729728, 4293918720],
         [2936012800, 4293918720],
         [2937061376, 4294443008],
         [2937585664, 4294705152],
@@ -1193,6 +1198,7 @@ function FindProxyForURL(url, host) {
         [3082289152, 4294443008],
         [3082813440, 4290772992],
         [3229351936, 4294901760],
+        [3232235520, 4294901760],
         [3233546240, 4294901760],
         [3388997632, 4294901760],
         [3389194240, 4294901760],
@@ -1723,7 +1729,7 @@ function FindProxyForURL(url, host) {
         [3758030848, 4294901760]
     ];
 
-    function convert_addr(ipchars) {
+    function convertAddress(ipchars) {
         var bytes = ipchars.split('.');
         var result = ((bytes[0] & 0xff) << 24) |
                      ((bytes[1] & 0xff) << 16) |
@@ -1732,8 +1738,35 @@ function FindProxyForURL(url, host) {
         return result;
     }
 
-    function isInNet(ipaddr, pattern, mask) {
-         return (ipaddr & mask) === (pattern & mask);
+    function compare(a, b) {
+        if (a >= 0 && b >= 0) {
+            return a - b;
+        }
+        if (a >= 0 && b <  0) {
+            return -1;
+        }
+        if (a <  0 && b >= 0) {
+            return 1;
+        }
+        if (a <  0 && b <  0) {
+            return a - b;
+        }
+    }
+
+    function match(ip, list) {
+        var left = 0, right = list.length;
+        do {
+            var mid = Math.floor((left + right) / 2),
+                cmp = compare(ip & list[mid][1], list[mid][0] & list[mid][1]);
+            if (cmp === 0) {
+                return true;
+            } else if (cmp > 0) {
+                left  = mid + 1;
+            } else {
+                right = mid;
+            }
+        } while (left + 1 <= right)
+        return false;
     }
 
     if (isPlainHostName(host)
@@ -1748,11 +1781,9 @@ function FindProxyForURL(url, host) {
         return 'DIRECT';
     }
 
-    var intIp = convert_addr(strIp);
-    for (var i = 0; i < list.length; i++) {
-        if (isInNet(intIp, list[i][0], list[i][1])) {
-            return 'DIRECT';
-        }
+    var intIp = convertAddress(strIp);
+    if (match(intIp, list)) {
+        return 'DIRECT';
     }
 
     return 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT';
