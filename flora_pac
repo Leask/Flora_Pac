@@ -1,146 +1,27 @@
-#!/usr/bin/env python
-# Flora_Pac by @leaskh
-# www.leaskh.com, i@leaskh.com
-# Based on chnroutes project (by Numb.Majority@gmail.com)
+#!/usr/bin/env node
+// Flora_Pac by @leaskh
+// www.leaskh.com, i@leaskh.com
+// Based on chnroutes project (by Numb.Majority@gmail.com)
 
-import re
-import urllib2
-import argparse
-import math
-import socket
-import struct
+var path = require('path'),
+    exec = require('child_process').exec,
+    rootPath = path.dirname(module.filename);
 
+function makePac(routes) {
+    var strPac = '';
+    for (var i in routes) {
+        console.log(routes[i]);
+    }
+}
 
-def ip2long(ip):
-    packedIP = socket.inet_aton(ip)
-    return struct.unpack("!L", packedIP)[0]
-
-
-def generate_pac(proxy):
-    results  = fetch_ip_data()
-    pacfile  = 'flora_pac.pac'
-    rfile    = open(pacfile, 'w')
-    results.insert(0, (ip2long('127.0.0.1'), ip2long('255.0.0.0'), 0))
-    results.insert(1, (ip2long('10.0.0.0'), ip2long('255.0.0.0'), 0))
-    results.insert(2, (ip2long('172.16.0.0'), ip2long('255.240.0.0'), 0))
-    results.insert(3, (ip2long('192.168.0.0'), ip2long('255.255.0.0'), 0))
-    strLines = (
-        "// Flora_Pac by @leaskh"
-        "\n// www.leaskh.com, i@leaskh.com"
-        "\n"
-        "\nfunction FindProxyForURL(url, host) {"
-        "\n"
-        "\n    var list = ["
-    )
-    intLines = 0
-    for ip,mask,_ in results:
-        if intLines > 0:
-            strLines = strLines + ','
-        intLines = intLines + 1
-        strLines = strLines + "\n        [%d, %d]"%(ip, mask)
-    strLines = strLines + (
-        "\n    ];"
-        "\n"
-        "\n    function convert_addr(ipchars) {"
-        "\n        var bytes = ipchars.split('.');"
-        "\n        var result = ((bytes[0] & 0xff) << 24) |"
-        "\n                     ((bytes[1] & 0xff) << 16) |"
-        "\n                     ((bytes[2] & 0xff) <<  8) |"
-        "\n                      (bytes[3] & 0xff);"
-        "\n        return result;"
-        "\n    }"
-        "\n"
-        "\n    function isInNet(ipaddr, pattern, mask) {"
-        "\n         return (ipaddr & mask) === (pattern & mask);"
-        "\n    }"
-        "\n"
-        "\n    if (isPlainHostName(host)"
-        "\n     || (host === '127.0.0.1')"
-        "\n     || (host === 'localhost')"
-        "\n     || (/\\b([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\\b/.test(host))) {"
-        "\n        return 'DIRECT';"
-        "\n    }"
-        "\n"
-        "\n    var strIp = dnsResolve(host);"
-        "\n    if (!strIp) {"
-        "\n        return 'DIRECT';"
-        "\n    }"
-        "\n"
-        "\n    var intIp = convert_addr(strIp);"
-        "\n    for (var i = 0; i < list.length; i++) {"
-        "\n        if (isInNet(intIp, list[i][0], list[i][1])) {"
-        "\n            return 'DIRECT';"
-        "\n        }"
-        "\n    }"
-        "\n"
-        "\n    return '%s';"
-        "\n"
-        "\n}"
-        "\n"%(proxy)
-    )
-    rfile.write(strLines)
-    rfile.close()
-    print ("Rules: %d items.\n"
-           "Usage: Use the newly created %s as your web browser's automatic "
-           "proxy configuration (.pac) file."%(intLines, pacfile))
-
-
-def fetch_ip_data():
-    #fetch data from apnic
-    print "Fetching data from apnic.net, it might take a few minutes, please wait..."
-    url=r'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest'
-    #url=r'http://flora/delegated-apnic-latest' #debug
-    data=urllib2.urlopen(url).read()
-
-    cnregex=re.compile(r'apnic\|cn\|ipv4\|[0-9\.]+\|[0-9]+\|[0-9]+\|a.*',re.IGNORECASE)
-    cndata=cnregex.findall(data)
-
-    results=[]
-    prev_net=''
-
-    for item in cndata:
-        unit_items=item.split('|')
-        starting_ip=unit_items[3]
-        num_ip=int(unit_items[4])
-
-        imask=0xffffffff^(num_ip-1)
-        #convert to string
-        imask=hex(imask)[2:]
-        mask=[0]*4
-        mask[0]=imask[0:2]
-        mask[1]=imask[2:4]
-        mask[2]='0' #imask[4:6]
-        mask[3]='0' #imask[6:8]
-
-        #convert str to int
-        mask=[ int(i,16 ) for i in mask]
-        mask="%d.%d.%d.%d"%tuple(mask)
-
-        #mask in *nix format
-        mask2=32-int(math.log(num_ip,2))
-
-        ip=starting_ip.split('.')
-        ip[2] = '0'
-        ip[3] = '0'
-        starting_ip = '.'.join(ip)
-        if starting_ip != prev_net:
-            results.append((ip2long(starting_ip), ip2long(mask), mask2))
-            prev_net = starting_ip
-
-    return results
-
-
-if __name__=='__main__':
-    parser=argparse.ArgumentParser(description="Generate proxy auto-config rules.")
-    parser.add_argument('-x', '--proxy',
-                        dest = 'proxy',
-                        default = 'SOCKS 127.0.0.1:8964',
-                        nargs = '?',
-                        help = "Proxy Server, examples: "
-                               "SOCKS 127.0.0.1:8964; "
-                               "SOCKS5 127.0.0.1:8964; "
-                               "PROXY 127.0.0.1:8964")
-
-    args = parser.parse_args()
-
-    generate_pac(args.proxy)
+exec(
+    'node ' + rootPath + '/bestroutetb/minifier.js',
+    function(error, stdout, stderr) {
+        if (error !== null || !stdout) {
+            console.log('Exec Error: ' + error);
+            return;
+        }
+        console.log(stderr);
+        //makePac(JSON.parse(stdout));
+    }
+);
