@@ -26,14 +26,14 @@ optional arguments:
   -p [PORT], --port [PORT]
                         Pac Server Port [OPTIONAL], examples: 8970
 </pre>
-Run a HTTP PAC server:
+* Run as a HTTP PAC server:
 <pre>
 $ ./flora_pac -x 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT' -p 8970
 </pre>
 ![PAC Server demo on Mac](https://raw.github.com/Leask/Flora_Pac/master/screenshots/mac.jpg "PAC Server demo on Mac")
 
 ## Get help
-Email/iMsg/GTalk: i@leaskh.com
+* Email/iMsg/GTalk: i@leaskh.com
 
 ## See also
 * A powerful fork: https://github.com/yaleh/Flora_Pac
