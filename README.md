@@ -12,7 +12,7 @@ $ git clone https://github.com/Leask/Flora_Pac.git
 ## Uasge
 <pre>
 $ ./flora_pac -h
-usage: flora_pac [-h] [-x [PROXY]]
+usage: flora_pac [-h] [-x [PROXY]] [-p [PORT]]
 
 Generate proxy auto-config rules.
 
