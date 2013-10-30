@@ -31,6 +31,8 @@ optional arguments:
 $ ./flora_pac -x 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT' -p 8970
 </pre>
 ![PAC Server demo on Mac](https://raw.github.com/Leask/Flora_Pac/master/screenshots/mac.jpg "PAC Server demo on Mac")
+* [NEW] Use it directly from official host:
+http://www.leaskh.com/blog/2013/10/30/测试为-flora_pac-提供-http-host/
 
 ## Get help
 * Email/iMsg/GTalk: i@leaskh.com
