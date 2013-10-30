@@ -6,4 +6,6 @@ $file = file_get_contents('flora_pac.pac');
 
 $file = preg_replace('/{{PROXY}}/', $proxy, $file);
 
+header('Content-Type: application/x-ns-proxy-autoconfig; charset=UTF-8');
+
 echo $file;
