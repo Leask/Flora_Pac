@@ -35,13 +35,13 @@ $ ./flora_pac -x 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT' -p 8970
 <pre>
 @ Get PAC file for proxy 'SOCKS 127.0.0.1:8964':
 $ curl http://flora.leaskh.com/pac?proxy=SOCKS%20127.0.0.1%3A8964
-
+--- --- --- --- --- --- ---
 @ Get PAC file for proxy 'SOCKS5 127.0.0.1:8964':
 $ curl http://flora.leaskh.com/pac?proxy=SOCKS5%20127.0.0.1%3A8964
-
+--- --- --- --- --- --- ---
 @ Get PAC file for proxy 'HTTP 127.0.0.1:6489':
 $ curl http://flora.leaskh.com/pac?proxy=PROXY%20127.0.0.1%3A6489
-
+--- --- --- --- --- --- ---
 @ A fallback demo from 'SOCKS5 127.0.0.1:8964' to 'SOCKS 127.0.0.1:8964':
 $ curl http://flora.leaskh.com/pac?proxy=SOCKS5%20127.0.0.1%3A8964%3B%20SOCKS%20127.0.0.1%3A8964
 </pre>
