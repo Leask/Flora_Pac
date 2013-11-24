@@ -406,6 +406,7 @@ function FindProxyForURL(url, host) {
         [1744437248, 4294901760],
         [1744502784, 4294901760],
         [1744568320, 4294901760],
+        [1744633856, 4294901760],
         [1778384896, 4294901760],
         [1778515968, 4294836224],
         [1778647040, 4294705152],
@@ -1743,10 +1744,11 @@ function FindProxyForURL(url, host) {
         var left = 0, right = list.length;
         do {
             var mid = Math.floor((left + right) / 2),
-                cmp = (ip & list[mid][1])>>>0 - (list[mid][0] & list[mid][1])>>>0;
-            if (cmp === 0) {
+                ip = (ip & list[mid][1]) >>> 0,
+                m = (list[mid][0] & list[mid][1]) >>> 0;
+            if (ip == m) {
                 return true;
-            } else if (cmp > 0) {
+            } else if (ip > m) {
                 left  = mid + 1;
             } else {
                 right = mid;
