@@ -1744,8 +1744,8 @@ function FindProxyForURL(url, host) {
         var left = 0, right = list.length;
         do {
             var mid = Math.floor((left + right) / 2),
-                ip = (ip & list[mid][1]) >>> 0,
-                m = (list[mid][0] & list[mid][1]) >>> 0;
+                ip  = (ip & list[mid][1]) >>> 0,
+                m   = (list[mid][0] & list[mid][1]) >>> 0;
             if (ip == m) {
                 return true;
             } else if (ip > m) {
