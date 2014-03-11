@@ -2141,6 +2141,6 @@ function FindProxyForURL(url, host) {
         return 'DIRECT';
     }
 
-    return 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT';
+    return '{{PROXY}}; DIRECT';
 
 }
