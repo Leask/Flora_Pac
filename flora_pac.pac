@@ -1803,7 +1803,7 @@ function FindProxyForURL(url, host) {
         'aliyuncs.com',
         'anzhi.com',
         'appinn.com',
-        'apple.com',
+//      'apple.com',
         'appsina.com',
         'archlinuxcn.org',
         'atpanel.com',
