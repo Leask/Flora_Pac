@@ -508,7 +508,7 @@ function FindProxyForURL(url, host) {
     return '%s';
 
 }
-"""%(proxy)
+"""%(proxy, proxy)
     rfile.write(strLines)
     rfile.close()
     print ("Rules: %d items.\n"
