@@ -1803,7 +1803,7 @@ function FindProxyForURL(url, host) {
         'aliyuncs.com',
         'anzhi.com',
         'appinn.com',
-        'apple.com',
+     // 'apple.com',
         'appsina.com',
         'archlinuxcn.org',
         'atpanel.com',
@@ -2098,6 +2098,13 @@ function FindProxyForURL(url, host) {
         'zongheng.com'
     ];
 
+    var dangerDomains = [
+        'apple.com',
+        'google.com',
+        'twitter.com',
+        'facebook.com'
+    ];
+
     var safePorts = [
         5223,
         3478,
@@ -2173,6 +2180,12 @@ function FindProxyForURL(url, host) {
     for (var i in safeDomains) {
         if (strDomain.indexOf('.' + safeDomains[i]) !== -1) {
             return 'DIRECT';
+        }
+    }
+
+    for (var i in dangerDomains) {
+        if (strDomain.indexOf('.' + dangerDomains[i]) !== -1) {
+            return '{{PROXY}}; DIRECT';
         }
     }
 
