@@ -2183,7 +2183,7 @@ function FindProxyForURL(url, host) {
         }
     }
 
-    for (var i in dangerDomains) {
+    for (i in dangerDomains) {
         if (strDomain.indexOf('.' + dangerDomains[i]) !== -1) {
             return 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT';
         }
