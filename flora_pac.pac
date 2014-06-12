@@ -1803,7 +1803,7 @@ function FindProxyForURL(url, host) {
         'aliyuncs.com',
         'anzhi.com',
         'appinn.com',
-     // 'apple.com',
+        'apple.com',
         'appsina.com',
         'archlinuxcn.org',
         'atpanel.com',
@@ -2099,7 +2099,7 @@ function FindProxyForURL(url, host) {
     ];
 
     var dangerDomains = [
-        'apple.com',
+     // 'apple.com',
         'google.com',
         'twitter.com',
         'facebook.com'
