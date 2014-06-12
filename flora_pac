@@ -480,7 +480,7 @@ function FindProxyForURL(url, host) {
         }
     }
 
-    for (var i in dangerDomains) {
+    for (i in dangerDomains) {
         if (strDomain.indexOf('.' + dangerDomains[i]) !== -1) {
             return '%s';
         }
