@@ -133,6 +133,7 @@ function FindProxyForURL(url, host) {
         [720633856, 4294705152],
         [720896000, 4294443008],
         [737935360, 4294901760],
+        [759169024, 4294901760],
         [822345728, 4294705152],
         [825425920, 4294901760],
         [825491456, 4294705152],
@@ -404,6 +405,7 @@ function FindProxyForURL(url, host) {
         [1743192064, 4294901760],
         [1743257600, 4294901760],
         [1743323136, 4294901760],
+        [1743388672, 4294901760],
         [1743781888, 4294901760],
         [1743847424, 4294901760],
         [1743912960, 4294901760],
@@ -2185,7 +2187,7 @@ function FindProxyForURL(url, host) {
 
     for (i in dangerDomains) {
         if (strDomain.indexOf('.' + dangerDomains[i]) !== -1) {
-            return 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT';
+            return 'SOCKS5 192.168.1.100:1080';
         }
     }
 
@@ -2208,6 +2210,6 @@ function FindProxyForURL(url, host) {
         return 'DIRECT';
     }
 
-    return 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT';
+    return 'SOCKS5 192.168.1.100:1080';
 
 }
