@@ -568,13 +568,13 @@ def pac_server(port):
     if port <= 0:
         return
     import SimpleHTTPServer
-    import SocketServer
+    import BaseHTTPServer
     class DefaultHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         def do_GET(self):
             if self.path == '/':
                 self.path = '/flora_pac.pac'
             return SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
-    httpd = SocketServer.TCPServer(('0.0.0.0', port), DefaultHandler)
+    httpd = BaseHTTPServer.HTTPServer(('0.0.0.0', port), DefaultHandler)
     print "PAC is now serving at: 0.0.0.0:%d"%(port)
     print "Check it out with: $ curl http://127.0.0.1:%d"%(port)
     httpd.serve_forever()
