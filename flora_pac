@@ -399,7 +399,9 @@ function FindProxyForURL(url, host) {
      // 'apple.com',
         'google.com',
         'twitter.com',
-        'facebook.com'
+        'facebook.com',
+        'tw.yahoo.com',
+        'youtube.com'
     ];
 
     var fakeIps = [
