@@ -405,6 +405,7 @@ function FindProxyForURL(url, host) {
         'zaobao.com.sg'
     ];
 
+    // see https://github.com/clowwindy/ChinaDNS/blob/master/chinadns/dnsrelay.py
     var fakeIps = [
         '74.125.127.102',
         '74.125.155.102',
@@ -446,7 +447,6 @@ function FindProxyForURL(url, host) {
         '93.46.8.89'
     ];
 
-    // see https://github.com/clowwindy/ChinaDNS/blob/master/chinadns/dnsrelay.py
     var safePorts = [
         5223,
         3478,
@@ -484,6 +484,8 @@ function FindProxyForURL(url, host) {
         16401,
         16402
     ];
+
+    var proxy = '%s';
 
     function convertAddress(ipchars) {
         var bytes = ipchars.split('.');
@@ -527,7 +529,7 @@ function FindProxyForURL(url, host) {
 
     for (i in dangerDomains) {
         if (strDomain.indexOf('.' + dangerDomains[i]) !== -1) {
-            return '%s';
+            return proxy;
         }
     }
 
@@ -542,12 +544,12 @@ function FindProxyForURL(url, host) {
 
     var strIp = dnsResolve(host);
     if (!strIp) {
-        return '%s';
+        return proxy;
     }
 
     for (i in fakeIps) {
         if (fakeIps[i] === strIp) {
-            return '%s';
+            return proxy;
         }
     }
 
@@ -556,10 +558,10 @@ function FindProxyForURL(url, host) {
         return 'DIRECT';
     }
 
-    return '%s';
+    return proxy;
 
 }
-"""%(proxy, proxy, proxy, proxy)
+"""%(proxy)
     rfile.write(strLines)
     rfile.close()
     print ("Rules: %d items.\n"
