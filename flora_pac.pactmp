@@ -132,6 +132,7 @@ function FindProxyForURL(url, host) {
         [720502784, 4294836224],
         [720633856, 4294705152],
         [720896000, 4294443008],
+        [737542144, 4294901760],
         [737935360, 4294901760],
         [759169024, 4294901760],
         [822345728, 4294705152],
@@ -213,7 +214,8 @@ function FindProxyForURL(url, host) {
         [994836480, 4294901760],
         [994902016, 4294901760],
         [994967552, 4294836224],
-        [995098624, 4294705152],
+        [995098624, 4294836224],
+        [995229696, 4294836224],
         [996868096, 4294901760],
         [996933632, 4294836224],
         [997064704, 4294836224],
@@ -406,6 +408,9 @@ function FindProxyForURL(url, host) {
         [1743257600, 4294901760],
         [1743323136, 4294901760],
         [1743388672, 4294901760],
+        [1743454208, 4294901760],
+        [1743519744, 4294901760],
+        [1743585280, 4294901760],
         [1743781888, 4294901760],
         [1743847424, 4294901760],
         [1743912960, 4294901760],
@@ -434,7 +439,8 @@ function FindProxyForURL(url, host) {
         [1781661696, 4294901760],
         [1781792768, 4294705152],
         [1782054912, 4294443008],
-        [1783234560, 4294836224],
+        [1783234560, 4294901760],
+        [1783300096, 4294901760],
         [1783627776, 4293918720],
         [1785462784, 4294705152],
         [1785724928, 4294443008],
@@ -800,7 +806,9 @@ function FindProxyForURL(url, host) {
         [2015887360, 4294705152],
         [2016149504, 4294705152],
         [2016411648, 4294836224],
-        [2016673792, 4294705152],
+        [2016673792, 4294901760],
+        [2016739328, 4294901760],
+        [2016804864, 4294836224],
         [2017460224, 4294705152],
         [2017722368, 4294705152],
         [2017984512, 4294901760],
@@ -1086,6 +1094,7 @@ function FindProxyForURL(url, host) {
         [2525036544, 4294901760],
         [2525626368, 4294836224],
         [2531196928, 4294901760],
+        [2532442112, 4294901760],
         [2533294080, 4294901760],
         [2566914048, 4294901760],
         [2567110656, 4294901760],
@@ -1106,6 +1115,7 @@ function FindProxyForURL(url, host) {
         [2724790272, 4294901760],
         [2734686208, 4294901760],
         [2737766400, 4294901760],
+        [2738159616, 4294901760],
         [2742878208, 4294901760],
         [2743992320, 4294901760],
         [2746286080, 4294901760],
@@ -2112,6 +2122,7 @@ function FindProxyForURL(url, host) {
         'zaobao.com.sg'
     ];
 
+    // see https://github.com/clowwindy/ChinaDNS/blob/master/chinadns/dnsrelay.py
     var fakeIps = [
         '74.125.127.102',
         '74.125.155.102',
@@ -2153,7 +2164,6 @@ function FindProxyForURL(url, host) {
         '93.46.8.89'
     ];
 
-    // see https://github.com/clowwindy/ChinaDNS/blob/master/chinadns/dnsrelay.py
     var safePorts = [
         5223,
         3478,
@@ -2192,6 +2202,8 @@ function FindProxyForURL(url, host) {
         16402
     ];
 
+    var proxy = '{{PROXY}}; DIRECT';
+
     function convertAddress(ipchars) {
         var bytes = ipchars.split('.');
         var result = ((bytes[0] & 0xff) << 24) |
@@ -2205,11 +2217,11 @@ function FindProxyForURL(url, host) {
         var left = 0, right = list.length;
         do {
             var mid = Math.floor((left + right) / 2),
-                ip  = (ip & list[mid][1]) >>> 0,
+                ipf = (ip & list[mid][1]) >>> 0,
                 m   = (list[mid][0] & list[mid][1]) >>> 0;
-            if (ip == m) {
+            if (ipf == m) {
                 return true;
-            } else if (ip > m) {
+            } else if (ipf > m) {
                 left  = mid + 1;
             } else {
                 right = mid;
@@ -2234,7 +2246,7 @@ function FindProxyForURL(url, host) {
 
     for (i in dangerDomains) {
         if (strDomain.indexOf('.' + dangerDomains[i]) !== -1) {
-            return '{{PROXY}}; DIRECT';
+            return proxy;
         }
     }
 
@@ -2249,12 +2261,12 @@ function FindProxyForURL(url, host) {
 
     var strIp = dnsResolve(host);
     if (!strIp) {
-        return '{{PROXY}}; DIRECT';
+        return proxy;
     }
 
     for (i in fakeIps) {
         if (fakeIps[i] === strIp) {
-            return '{{PROXY}}; DIRECT';
+            return proxy;
         }
     }
 
@@ -2263,6 +2275,6 @@ function FindProxyForURL(url, host) {
         return 'DIRECT';
     }
 
-    return '{{PROXY}}; DIRECT';
+    return proxy;
 
 }
