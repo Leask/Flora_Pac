@@ -408,7 +408,6 @@ function FindProxyForURL(url, host) {
         'youku.com' : 1,
         'yupoo.com' : 1,
         'yy.com' : 1,
-        'yyets.com' : 1,
         'zbjimg.com' : 1,
         'zhaopin.com' : 1,
         'zhi.hu' : 1,
@@ -423,6 +422,7 @@ function FindProxyForURL(url, host) {
         'google.com' : 1,
         'twitter.com' : 1,
         'facebook.com' : 1,
+        'yyets.com' : 1,
         'tw.yahoo.com' : 1,
         'youtube.com' : 1,
         'zaobao.com.sg' : 1
