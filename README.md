@@ -9,7 +9,7 @@ Inspired by https://github.com/fivesheep/chnroutes .
 $ git clone https://github.com/Leask/Flora_Pac.git
 </pre>
 
-## Uasge
+## Usage
 <pre>
 $ ./flora_pac -h
 usage: flora_pac [-h] [-x [PROXY]] [-p [PORT]]
