@@ -100,6 +100,7 @@ function FindProxyForURL(url, host) {
         'aliyuncs.com' : 1,
         'anzhi.com' : 1,
         'appinn.com' : 1,
+        'appdownload.itunes.apple.com' : 1,
         'apple.com' : 1,
         'appsina.com' : 1,
         'archlinuxcn.org' : 1,
@@ -560,7 +561,9 @@ function FindProxyForURL(url, host) {
         }
     }
 
-    if (isPlainHostName(host)
+    // fix error message in FoxyProxy when switching tabs. http://verihy.me/posts/foxyproxy-pac/
+    if (typeof host === 'undefined'
+     || isPlainHostName(host)
      || host === '127.0.0.1'
      || host === 'localhost') {
         return 'DIRECT';
